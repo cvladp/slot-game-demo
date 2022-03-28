@@ -1,0 +1,29 @@
+{
+  "name": "slot-game-demo",
+  "version": "1.0.0",
+  "description": "Falling Slot Test",
+  "main": "index.js",
+  "scripts": {
+    "serve": "webpack server",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cvladp/slot-game-demo.git"
+  },
+  "author": "Panoiu Vlad Constantin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cvladp/slot-game-demo/issues"
+  },
+  "homepage": "https://github.com/cvladp/slot-game-demo#readme",
+  "devDependencies": {
+    "pixi.js": "^6.3.0",
+    "ts-loader": "^9.2.8",
+    "typescript": "^4.6.3",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}

@@ -2,6 +2,10 @@ const path = require('path');
 
 module.exports = {
     entry: './src/index.ts',
+    resolve: {
+        extensions: ['.ts', '.js'],
+        modules: [path.resolve(path.join(__dirname, 'node_modules'))]
+    },
     module: {
         rules: [
             {

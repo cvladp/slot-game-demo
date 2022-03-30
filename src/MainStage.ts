@@ -3,6 +3,8 @@ import { Background } from './Background';
 import { Button } from './Button';
 import { Symbol } from "./Symbol";
 import { Utils } from './Utils';
+import { gsap } from 'gsap';
+import { Graphics } from 'pixi.js';
 
 export class MainStage {
 
@@ -10,28 +12,29 @@ export class MainStage {
     private app: PIXI.Application;
     private backGround: Background;
     private spinButton;
+    private symbolsContainer: PIXI.Container;
     
-
     constructor(app:PIXI.Application){
         this.app = app;
         this.symbolsGrid = [];
         this.backGround = new PIXI.Sprite;
-        this.spinButton = new PIXI.Sprite;
+        this.spinButton = new Button;
+        this.symbolsContainer = new PIXI.Container;
         this.initBackground();
         this.initGrid();
         this.initButton();
     }
 
-
     private initGrid():void{
         for(let i = 0; i < 15; i++){
             let symbolTexture = this.app.loader.resources['symbol'+(Math.floor(Math.random() * 8) + 1)].texture;
             let symbol = new Symbol(symbolTexture);
-            symbol.anchor.set(0.5);
-            symbol.x = (i % 5) * 230 + 350;
-            symbol.y = Math.floor(i / 5) * 225 + 250;
             this.symbolsGrid[i] = symbol;
-            this.app.stage.addChild(this.symbolsGrid[i]);
+            this.symbolsGrid[i].x = (i % 5) * 230 + 250;
+            this.symbolsGrid[i].y = Math.floor(i / 5) * 225 + 170;
+            this.symbolsContainer.addChild(this.symbolsGrid[i]);
+            this.symbolsContainer.mask = new Graphics().beginFill(0xffffff).drawRect(this.symbolsGrid[0].x, this.symbolsGrid[0].y, symbol.width*5,symbol.height*3).endFill();
+            this.app.stage.addChild(this.symbolsContainer);
         }
     }
 
@@ -48,7 +51,39 @@ export class MainStage {
         this.spinButton = new Button(pressedTexture,hoverTexture,normalTexture,disableTexture);
         this.spinButton.x = 1450;
         this.spinButton.y = 430;
+        Button.pressedButtonHandler = () =>{
+            this.startSpin();
+        }
         this.app.stage.addChild(this.spinButton);
+    }
+
+    private startSpin():void{
+        let delay = 0;
+        for(let i = this.symbolsGrid.length-1; i >= 0; i--){
+            this.symbolsGrid[i].moveSymbolOut(delay);
+            delay += 0.1;
+        }
+
+        gsap.delayedCall(0.7, this.insertNewSymbols.bind(this));
+    }
+
+    private insertNewSymbols():void{
+        let delay = 1;
+        for(let i = 0; i < this.symbolsGrid.length; i++){
+            let xPos = (i % 5) * 230 + 250;
+            let yPos = Math.floor(i / 5) * 225 + 170;
+            this.symbolsGrid[i].moveSymbolIn(delay,xPos,yPos);
+            if(i > 0 && i % 5 == 0){
+                delay += 0.3
+            }else{
+                delay += 0.1;  
+            }
+        }
+        gsap.delayedCall(3, this.enableButton.bind(this));
+    }
+
+    private enableButton():void{
+        this.spinButton.enableButton();
     }
 
 }

@@ -1,5 +1,6 @@
 import * as PIXI from  'pixi.js'
 import { gsap } from 'gsap';
+import { Howl } from 'howler';
 
 export class Symbol extends PIXI.Sprite{
 
@@ -13,7 +14,9 @@ export class Symbol extends PIXI.Sprite{
         }});
     }
 
-    public moveSymbolIn(currentSymbolDelay:number, xPosition: number, yPosition:number){
-        gsap.to(this, {x:xPosition, y:yPosition, duration: 0.3, delay: currentSymbolDelay, ease:'back.out(1.5)'});
+    public moveSymbolIn(currentSymbolDelay:number, xPosition: number, yPosition:number, sound:Howl){
+        gsap.to(this, {x:xPosition, y:yPosition, duration: 0.3, delay: currentSymbolDelay, ease:'back.out(0.5)', onComplete:()=>{
+            sound.play();
+        }});
     }
 }

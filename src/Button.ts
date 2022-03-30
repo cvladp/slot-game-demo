@@ -3,6 +3,7 @@ import * as PIXI from  'pixi.js'
 import { Texture } from 'pixi.js';
 import { Utils } from './Utils';
 import { gsap } from 'gsap';
+import { Howl } from 'howler';
 
 export class Button extends PIXI.Container{
     private pressedTexture;
@@ -12,11 +13,12 @@ export class Button extends PIXI.Container{
 
     private buttonSprite: PIXI.Sprite;
     private buttonText: PIXI.Text;
-
+    private sound;
     public static pressedButtonHandler:Function;
 
-    constructor(pressedTexture?:any,hoverTexture?:any,normalTexture?:any,disableTexture?:any){
+    constructor(pressedTexture?:any,hoverTexture?:any,normalTexture?:any,disableTexture?:any,sound?:Howl){
         super();
+        this.sound = sound;
         this.buttonSprite = new PIXI.Sprite;
         this.buttonText = new PIXI.Text('SPIN');
         this.pressedTexture = pressedTexture;
@@ -28,7 +30,6 @@ export class Button extends PIXI.Container{
     }
 
     private setupButton():void{
-    
         this.buttonSprite.texture = this.normalTexture;
         this.interactive = true;
         this.buttonMode = true;
@@ -67,6 +68,7 @@ export class Button extends PIXI.Container{
     private onButtonPressed():void{
         this.buttonSprite.texture = this.pressedTexture;
         this.interactive = false;
+        this.sound?.play();
         gsap.to(this,{y:this.y+5, duration: 0.2, yoyo:true, repeat: 1});
 
         gsap.delayedCall(0.2,this.onButtonDisable.bind(this));

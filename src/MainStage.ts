@@ -5,6 +5,7 @@ import { Symbol } from "./Symbol";
 import { Utils } from './Utils';
 import { gsap } from 'gsap';
 import { Graphics, resources } from 'pixi.js';
+import { Howl } from 'howler';
 
 export class MainStage {
 
@@ -13,9 +14,11 @@ export class MainStage {
     private backGround: Background;
     private spinButton;
     private symbolsContainer: PIXI.Container;
+    private sounds:Howl[];
     
-    constructor(app:PIXI.Application){
+    constructor(app:PIXI.Application, sounds:Howl[]){
         this.app = app;
+        this.sounds = sounds;
         this.symbolsGrid = [];
         this.backGround = new PIXI.Sprite;
         this.spinButton = new Button;
@@ -30,10 +33,10 @@ export class MainStage {
             let symbolTexture = this.app.loader.resources['symbol'+(Math.floor(Math.random() * 8) + 1)].texture;
             let symbol = new Symbol(symbolTexture);
             this.symbolsGrid[i] = symbol;
-            this.symbolsGrid[i].x = (i % 5) * 230 + 250;
-            this.symbolsGrid[i].y = Math.floor(i / 5) * 225 + 170;
+            this.symbolsGrid[i].x = Math.floor(i / 3) * 239 + 150;
+            this.symbolsGrid[i].y = (i % 3) * 230 + 170;
             this.symbolsContainer.addChild(this.symbolsGrid[i]);
-            this.symbolsContainer.mask = new Graphics().beginFill(0xffffff).drawRect(this.symbolsGrid[0].x, this.symbolsGrid[0].y, symbol.width*5,symbol.height*3).endFill();
+            this.symbolsContainer.mask = new Graphics().beginFill(0xffffff).drawRect(this.symbolsGrid[0].x-1, this.symbolsGrid[0].y-1, symbol.width*5+25,symbol.height*3+25).endFill();
             this.app.stage.addChild(this.symbolsContainer);
         }
     }
@@ -48,7 +51,7 @@ export class MainStage {
         let normalTexture = this.app.loader.resources[Utils.BUTTON_NORMAL].texture;
         let hoverTexture = this.app.loader.resources[Utils.BUTTON_HOVER].texture;
         let disableTexture = this.app.loader.resources[Utils.BUTTON_DISABLED].texture;
-        this.spinButton = new Button(pressedTexture,hoverTexture,normalTexture,disableTexture);
+        this.spinButton = new Button(pressedTexture,hoverTexture,normalTexture,disableTexture, this.sounds[this.sounds.length-1]);
         this.spinButton.x = 1450;
         this.spinButton.y = 430;
         Button.pressedButtonHandler = () =>{
@@ -69,12 +72,16 @@ export class MainStage {
 
     private insertNewSymbols():void{
         let delay = 1;
+        let soundsCounter = 0;
         for(let i = 0; i < this.symbolsGrid.length; i++){
-            let xPos = (i % 5) * 230 + 250;
-            let yPos = Math.floor(i / 5) * 225 + 170;
-            this.symbolsGrid[i].moveSymbolIn(delay,xPos,yPos);
-            if(i > 0 && i % 5 == 0){
-                delay += 0.3
+            if(i > 0 && i % 3 == 0){
+                soundsCounter++;
+            }
+            let xPos = Math.floor(i / 3) * 239 + 150;
+            let yPos = (i % 3) * 230 + 170;
+            this.symbolsGrid[i].moveSymbolIn(delay,xPos,yPos,this.sounds[soundsCounter]);
+            if(i > 0 && i % 3 == 0){
+                delay += 0.2
             }else{
                 delay += 0.1;  
             }

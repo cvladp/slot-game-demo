@@ -4,7 +4,7 @@ import { Button } from './Button';
 import { Symbol } from "./Symbol";
 import { Utils } from './Utils';
 import { gsap } from 'gsap';
-import { Graphics } from 'pixi.js';
+import { Graphics, resources } from 'pixi.js';
 
 export class MainStage {
 
@@ -79,11 +79,21 @@ export class MainStage {
                 delay += 0.1;  
             }
         }
+        gsap.delayedCall(1, this.shuffleSymbols.bind(this));
         gsap.delayedCall(3, this.enableButton.bind(this));
     }
 
     private enableButton():void{
         this.spinButton.enableButton();
+    }
+
+    private shuffleSymbols():void{
+        this.symbolsGrid.forEach(element => {
+            let randomTexture = Math.floor(Math.random() * 8) + 1;
+            let symbolTexture = PIXI.Texture.from('./images/symbol_'+randomTexture+'.png');
+            element.texture= symbolTexture;
+            element.texture.update();
+        });
     }
 
 }

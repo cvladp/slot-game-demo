@@ -4,7 +4,7 @@ import { Button } from './Button';
 import { Symbol } from "./Symbol";
 import { Utils } from './Utils';
 import { gsap } from 'gsap';
-import { Graphics, resources } from 'pixi.js';
+import { Graphics } from 'pixi.js';
 import { Howl } from 'howler';
 
 
@@ -17,7 +17,7 @@ export class MainStage {
     private symbolsGrid:Symbol[];
     private app: PIXI.Application;
     private backGround: Background;
-    private spinButton;
+    private spinButton: Button;
     private symbolsContainer: PIXI.Container;
     private sounds:Howl[];
     

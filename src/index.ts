@@ -1,7 +1,7 @@
 import * as PIXI from  'pixi.js'
 import { MainStage } from './MainStage';
 import { Utils } from './Utils';
-import {Howl, Howler} from 'howler';
+import { Howl } from 'howler';
 import { gsap } from 'gsap';
 import { Preloader } from './Preloader';
 

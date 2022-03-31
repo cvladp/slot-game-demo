@@ -1,3 +1,8 @@
+
+/** 
+ *    Utils class
+ *    Serves as the storage class for string names
+ */
 export class Utils{
     public static readonly SYMBOL_NAME: string = 'symbol';
     public static readonly BACKGROUND: string = 'background';

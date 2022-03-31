@@ -1,12 +1,19 @@
 import * as PIXI from  'pixi.js'
 import { gsap } from 'gsap';
 
-
+/** 
+ *    Preloader scene class
+ *    Serves as the initial page for the game
+ */
 export class Preloader extends PIXI.Container{
 
     private loadingText: PIXI.Text;
     private textStyle: PIXI.TextStyle;
 
+    /** 
+     * Constructor method for preloader class
+     * Initializes the text and text style
+     */
     constructor(){
         super();
         this.loadingText = new PIXI.Text('Loading...');
@@ -32,6 +39,9 @@ export class Preloader extends PIXI.Container{
         this.animateText();
     }
 
+    /** 
+     * Method used for text animation during the preloader
+     */
     private animateText(){
         gsap.to(this, {alpha: 1, yoyo:true, repeat: 10, duration: 0.5});
     }

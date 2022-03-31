@@ -1,10 +1,12 @@
 
 import * as PIXI from  'pixi.js'
-import { Texture } from 'pixi.js';
-import { Utils } from './Utils';
 import { gsap } from 'gsap';
 import { Howl } from 'howler';
 
+/** 
+ *    Button class
+ *    Serves as the container of the spin button
+ */
 export class Button extends PIXI.Container{
     private pressedTexture;
     private hoverTexture;
@@ -16,6 +18,10 @@ export class Button extends PIXI.Container{
     private sound;
     public static pressedButtonHandler:Function;
 
+    /** 
+     *    Constructor method for spin button class
+     *    Initializes spin button sprite and spin button text
+     */
     constructor(pressedTexture?:any,hoverTexture?:any,normalTexture?:any,disableTexture?:any,sound?:Howl){
         super();
         this.sound = sound;
@@ -29,6 +35,9 @@ export class Button extends PIXI.Container{
         this.setupButton();
     }
 
+    /** 
+     *    Method used to set events handlers for button states
+     */
     private setupButton():void{
         this.buttonSprite.texture = this.normalTexture;
         this.interactive = true;
@@ -41,6 +50,9 @@ export class Button extends PIXI.Container{
         this.setButtonText();
     }
 
+    /** 
+     *    Method used to set button text and style it
+     */
     private setButtonText():void{
         this.buttonText.x = this.x+45;
         this.buttonText.y = this.y+30;
@@ -65,6 +77,9 @@ export class Button extends PIXI.Container{
         this.addChild(this.buttonText);
     }
 
+    /** 
+     *   Handler for button pressed state
+     */
     private onButtonPressed():void{
         this.buttonSprite.texture = this.pressedTexture;
         this.interactive = false;
@@ -75,18 +90,30 @@ export class Button extends PIXI.Container{
         Button.pressedButtonHandler();
     }
 
+    /** 
+     *   Handler for button hover state
+     */
     private onButtonHover():void{
         this.buttonSprite.texture = this.hoverTexture;
     }
 
+    /** 
+     *   Handler for pointer out of the button state
+     */
     private onButtonOut():void{
         this.buttonSprite.texture = this.normalTexture;
     }
 
+    /** 
+     *   Handler for button disabled state
+     */
     private onButtonDisable():void{
         this.buttonSprite.texture = this.disableTexture;
     }
 
+    /** 
+     *   Method used to enable the button functionality
+     */
     public enableButton():void{
         this.buttonSprite.texture = this.normalTexture;
         this.interactive = true;

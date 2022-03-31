@@ -5,12 +5,18 @@ import {Howl, Howler} from 'howler';
 import { gsap } from 'gsap';
 import { Preloader } from './Preloader';
 
+/** 
+ *    Entry point of the game
+ *    Serves as the loader for game resources
+ */
 class EntryPoint{
     public app: PIXI.Application;
     public sounds:Howl[] = [];
     private preloader:Preloader;
 
-
+	/**
+	 * Constructor method, used to initialize the main pixi application
+	 */
     constructor(){
         this.app = new PIXI.Application({
             backgroundColor: 0xFFFFFF, resolution: window.devicePixelRatio || 1,
@@ -23,6 +29,9 @@ class EntryPoint{
         
     }
 
+	/**
+	 * Method used to load ressources into pixi loader
+	 */
     public startAppLoader():void{
         for(let i = 1; i < 9; i++){
             this.app.loader.add(Utils.SYMBOL_NAME+i,'public/images/symbol_'+i+'.png');
@@ -42,13 +51,18 @@ class EntryPoint{
         this.app.loader.load();
     }
 
+    /**
+	 * Handler method for starting ressource loading event
+     * Adds the preloader scene to the app
+	 */
     private onLoadingStarted():void{
         this.app.stage.addChild(this.preloader);
     }
 
-
+    /**
+	 * Handler method for complete ressource loading event
+	 */
     private onAssetsLoaded():void{
-
         gsap.delayedCall(3, ()=>{
             const mainStage = new MainStage(this.app, this.sounds);
             this.app.stage.removeChild(this.preloader);

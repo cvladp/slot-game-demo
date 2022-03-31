@@ -7,6 +7,11 @@ import { gsap } from 'gsap';
 import { Graphics, resources } from 'pixi.js';
 import { Howl } from 'howler';
 
+
+/** 
+ *    MainStage class
+ *    Serves as the main logic class of the game
+ */
 export class MainStage {
 
     private symbolsGrid:Symbol[];
@@ -16,6 +21,11 @@ export class MainStage {
     private symbolsContainer: PIXI.Container;
     private sounds:Howl[];
     
+
+    /** 
+     *    Constructor method for main stage
+     *    Initializes the elements of the stage
+     */
     constructor(app:PIXI.Application, sounds:Howl[]){
         this.app = app;
         this.sounds = sounds;
@@ -28,6 +38,9 @@ export class MainStage {
         this.initButton();
     }
 
+    /** 
+     *    Initializer method for the 5x3 symbols grid
+     */
     private initGrid():void{
         for(let i = 0; i < 15; i++){
             let symbolTexture = this.app.loader.resources['symbol'+(Math.floor(Math.random() * 8) + 1)].texture;
@@ -41,11 +54,17 @@ export class MainStage {
         }
     }
 
+    /** 
+     *    Initializer method for the background
+     */
     private initBackground():void{
         this.backGround = new Background(this.app.loader.resources[Utils.BACKGROUND].texture);
         this.app.stage.addChild(this.backGround);
     }
 
+    /** 
+     *    Initializer method for the spin button
+     */
     private initButton():void{
         let pressedTexture = this.app.loader.resources[Utils.BUTTON_PRESSED].texture;
         let normalTexture = this.app.loader.resources[Utils.BUTTON_NORMAL].texture;
@@ -60,16 +79,21 @@ export class MainStage {
         this.app.stage.addChild(this.spinButton);
     }
 
+    /** 
+     *    Method used to start symbols animation out of the screen
+     */
     private startSpin():void{
         let delay = 0;
         for(let i = this.symbolsGrid.length-1; i >= 0; i--){
             this.symbolsGrid[i].moveSymbolOut(delay);
             delay += 0.1;
         }
-
         gsap.delayedCall(0.7, this.insertNewSymbols.bind(this));
     }
 
+    /** 
+     *    Method used to insert symbols into the screen
+     */
     private insertNewSymbols():void{
         let delay = 1;
         let soundsCounter = 0;
@@ -90,10 +114,16 @@ export class MainStage {
         gsap.delayedCall(3, this.enableButton.bind(this));
     }
 
+    /** 
+     *    Method used to call enable method of the button class
+     */
     private enableButton():void{
         this.spinButton.enableButton();
     }
 
+    /** 
+     *    Method used to generate random symbols
+     */
     private shuffleSymbols():void{
         this.symbolsGrid.forEach(element => {
             let randomTexture = Math.floor(Math.random() * 8) + 1;

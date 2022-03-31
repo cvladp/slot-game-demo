@@ -1,4 +1,3 @@
-
 /** 
  *    Utils class
  *    Serves as the storage class for string names

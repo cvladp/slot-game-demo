@@ -11,8 +11,11 @@ class EntryPoint{
 
     constructor(){
         this.app = new PIXI.Application({
-            width: window.innerWidth , height: window.innerHeight, backgroundColor: 0x93FF, resolution: window.devicePixelRatio || 1,
+            backgroundColor: 0x93FF, resolution: window.devicePixelRatio || 1,
         });
+        this.app.renderer.view.style.width = window.innerWidth +'px';
+        this.app.renderer.view.style.height = window.innerHeight +'px';
+        this.app.renderer.resize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.app.view);
         
     }

@@ -97,7 +97,7 @@ export class MainStage {
     private shuffleSymbols():void{
         this.symbolsGrid.forEach(element => {
             let randomTexture = Math.floor(Math.random() * 8) + 1;
-            let symbolTexture = PIXI.Texture.from('./images/symbol_'+randomTexture+'.png');
+            let symbolTexture = PIXI.Texture.from('public/images/symbol_'+randomTexture+'.png');
             element.texture= symbolTexture;
             element.texture.update();
         });

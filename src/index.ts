@@ -19,18 +19,18 @@ class EntryPoint{
 
     public startAppLoader():void{
         for(let i = 1; i < 9; i++){
-            this.app.loader.add(Utils.SYMBOL_NAME+i,'./images/symbol_'+i+'.png');
+            this.app.loader.add(Utils.SYMBOL_NAME+i,'public/images/symbol_'+i+'.png');
         }
 
         for(let i = 1; i < 6; i++){
-            this.sounds[i-1] = new Howl({src: './sounds/Reel_Stop_'+i+'.mp3'});
+            this.sounds[i-1] = new Howl({src: 'public/sounds/Reel_Stop_'+i+'.mp3'});
         }
-        this.sounds[this.sounds.length] = new Howl({src: './sounds/Start_Button.mp3'})
-        this.app.loader.add(Utils.BACKGROUND, './images/background.jpg');
-        this.app.loader.add(Utils.BUTTON_DISABLED, 'buttons/btn_spin_disabled.png');
-        this.app.loader.add(Utils.BUTTON_HOVER, 'buttons/btn_spin_hover.png');
-        this.app.loader.add(Utils.BUTTON_NORMAL, 'buttons/btn_spin_normal.png');
-        this.app.loader.add(Utils.BUTTON_PRESSED, 'buttons/btn_spin_pressed.png');
+        this.sounds[this.sounds.length] = new Howl({src: 'public/sounds/Start_Button.mp3'})
+        this.app.loader.add(Utils.BACKGROUND, 'public/images/background.jpg');
+        this.app.loader.add(Utils.BUTTON_DISABLED, 'public/buttons/btn_spin_disabled.png');
+        this.app.loader.add(Utils.BUTTON_HOVER, 'public/buttons/btn_spin_hover.png');
+        this.app.loader.add(Utils.BUTTON_NORMAL, 'public/buttons/btn_spin_normal.png');
+        this.app.loader.add(Utils.BUTTON_PRESSED, 'public/buttons/btn_spin_pressed.png');
         this.app.loader.onComplete.add(this.onAssetsLoaded.bind(this));
         this.app.loader.load();
     }

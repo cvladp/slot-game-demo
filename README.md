@@ -22,3 +22,6 @@ https://cvladp.github.io/slot-game-demo/
 ## Known issues
 If you use a laptop to run the game from the above link, 
 use 100 % scaling from Display Settings --> Scale and layout.
+
+## Game screenshot
+![image](https://user-images.githubusercontent.com/24491744/161082643-1c7bf07b-9b11-4da5-8bad-51448bfa2121.png)
